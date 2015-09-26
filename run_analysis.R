@@ -4,7 +4,7 @@
 #
 # This R script was written on September 7, 2015 by henry2016, as a programming
 # assignment for the Coursera course "Getting and Cleaning Data", created by
-# the Data Science Teaem at the Johns Hopkins Bloomberg School of Public Health.
+# the Data Science Team at the Johns Hopkins Bloomberg School of Public Health.
 #
 # According to the assignment's instructions, this script should:
 #
@@ -37,6 +37,40 @@
 ################################################################################
 library (plyr)
 
+# Main routine, to summarize the data for step 5
+main <- function() {
+    df <- makeTidyData() # Get step 4 data frame
+    newDf <- data.frame()
+
+    # Get a list of activities
+    activityList <- sort(unique(df[, "activity"]))
+
+    for (activity in activityList) {
+        # get a list of subjects for this activity
+        subjectList <- sort(unique(
+            df[df$activity == activity, "subject"]))
+        for (subject in subjectList) {
+            # print(paste("subjectId =", subjectId, ", activity =", activity))
+            indices <- (df$subject == subject) & (df$activity == activity)
+            sliced <- df[indices, ]
+            newRow <- list(activity, subject)
+            means <- NULL
+            for (i in 3:ncol(sliced)) {
+                meanVal = mean(sliced[, i])
+                newRow[length(newRow) + 1] <- meanVal
+            }
+            rowDf <- as.data.frame(matrix(newRow, ncol = length(newRow)), stringsAsFactors = FALSE)
+            newDf <- rbind(newDf, rowDf)
+        }
+    }
+    names(newDf) <- names(df)
+    newerDf <- data.frame(lapply(newdf, as.character), stringsAsFactors=FALSE)
+    write.table(newerDf, "output.txt", row.names = FALSE)
+    return(newerDf)
+}
+
+
+
 makeTidy <- function(nameFrag = "test", baseDir = "UCI Har Datase",
                      colLabels = NULL) {
     # Read the data file into a data frame
@@ -51,6 +85,16 @@ makeTidy <- function(nameFrag = "test", baseDir = "UCI Har Datase",
 
     # Make a list of the column names having averages or standard deviations.
     aveOrStdColNames <- colLabels[aveOrStdL]
+
+    # Sanitize the column names
+    for (i in 1:length(aveOrStdColNames)) {
+        aveOrStdColNames[i] <- gsub("-mean()", "Mean", aveOrStdColNames[i],
+                                    fixed = TRUE)
+        aveOrStdColNames[i] <- gsub("-std()", "Std", aveOrStdColNames[i],
+                                    fixed = TRUE)
+        aveOrStdColNames[i] <- sub("-", "", aveOrStdColNames[i],
+                                    fixed = TRUE)
+    }
 
     # select only those columns from the data frame.
     df <- df[, aveOrStdL]
@@ -74,12 +118,12 @@ makeTidy <- function(nameFrag = "test", baseDir = "UCI Har Datase",
     subjectsFileName <- sprintf("%s/%s/subject_%s.txt", baseDir, nameFrag, nameFrag)
     subjects <- read.table(subjectsFileName)
 
-    # Combine the subjects, activities, and data into a frame
-    combinedFrame <- cbind(subjects, activityFactors, df,
+    # Combine the activities, subjects, and data into a frame
+    combinedFrame <- cbind(activityFactors, subjects, df,
                            stringsAsFactors = FALSE)
 
     # Set the column names in the combinedFrame
-    names(combinedFrame) <- c("subject", "activity", aveOrStdColNames)
+    names(combinedFrame) <- c("activity", "subject", aveOrStdColNames)
     combinedFrame <- combinedFrame[order(combinedFrame[, 1],
                                          combinedFrame[, 2]), ]
     return( combinedFrame )
@@ -96,36 +140,6 @@ makeTidyData <- function() {
     trainDataFrame <- makeTidy("train", baseDir, colLabels)
     testDataFrame <- makeTidy("test", baseDir, colLabels)
     mergedDataFrame <- rbind(trainDataFrame, testDataFrame)
-}
-
-# Main routine, to summarize the data for step 5
-do <- function() {
-    df <- makeTidyData() # Get step 4 data frame
-    newDf <- data.frame()
-
-    # Get a list of subjects
-    subjectList <- sort(unique(df[, "subject"]))
-
-    for (subjectId in subjectList) {
-        # get a list of activites for this subject
-        activityList <- sort(unique(
-            df[df$subject == subjectId, "activity"]))
-        for (activity in activityList) {
-            print(paste("subjectId =", subjectId, ", activity =", activity))
-            indices <- (df$subject == subjectId) & (df$activity == activity)
-            sliced <- df[indices, ]
-            newRow <- list(subjectId, activity)
-            means <- NULL
-            for (i in 3:ncol(sliced)) {
-                meanVal = mean(sliced[, i])
-                newRow[length(newRow) + 1] <- meanVal
-            }
-            rowDf <- as.data.frame(matrix(newRow, ncol = length(newRow)), stringsAsFactors = FALSE)
-            newDf <- rbind(newDf, rowDf)
-        }
-    }
-    names(newDf) <- names(df)
-    return(newDf)
 }
 
 

@@ -13,7 +13,7 @@ The data frame produced by running the script consists of 180 observations of 68
 
 ## Variables
 ### The first two variables
-The first two variables, named *activity* and *subject*, are somewhat different than the remaining variables, and are used to sort the rows of the output data frame, primarily by *activity*, and secondarily by *subject*.  These two variables are described first.
+The first two variables, named *activity* and *subject*, are somewhat different than the remaining variables, and are used to sort the rows of the output data frame, primarily by *activity*, and secondarily by *subject*.  This sorting order was chosen to allow a quick visual comparison of adjacent rows to look for measurements that appear correlated across subjects for a given activity.  These two variables are described first below.
 
 #### Activity
 The first variable, named *activity*, is a string representing the type of activity being performed during an observation.  The six possible values of the *activity* string are:
@@ -24,7 +24,7 @@ The first variable, named *activity*, is a string representing the type of activ
 - WALKING_DOWNSTAIRS
 - WALKING_UPSTAIRS
 
-These activity names were obtained from the activity_labels.txt file in the UCI HAR dataset.  They were spliced in the results dta frame by mapping an integer activity factor to the corresponding activity string.
+These activity names were obtained from the activity_labels.txt file in the UCI HAR dataset.  They were spliced into the results data frame by mapping an integer activity factor to a corresponding activity string.
 
 #### Subject
 The second variable, named *subject*, is an integer ranging from 1 to 30, representing which of the subjects performed the activity being observed.
@@ -58,74 +58,77 @@ The remaining variables use a consistent naming syntax, as follows:
 
 #### Names
 
-The names of the remaining variables after *activity* and *subject*, in alphabvetical order, are as follows:
+The following cross-reference table shows the names of the remaining variables after *activity* and *subject*, in alphabetical order, as well as the name of the experimental data variable that was averaged:
 
-*freqDomainBodyAccJerkMagMean*,
-*freqDomainBodyAccJerkMagStd*,
-*freqDomainBodyAccJerkMeanX*,
-*freqDomainBodyAccJerkMeanY*,
-*freqDomainBodyAccJerkMeanZ*,
-*freqDomainBodyAccJerkStdX*,
-*freqDomainBodyAccJerkStdY*,
-*freqDomainBodyAccJerkStdZ*,
-*freqDomainBodyAccMagMean*,
-*freqDomainBodyAccMagStd*,
-*freqDomainBodyAccMeanX*,
-*freqDomainBodyAccMeanY*,
-*freqDomainBodyAccMeanZ*,
-*freqDomainBodyAccStdX*,
-*freqDomainBodyAccStdY*,
-*freqDomainBodyAccStdZ*,
-*freqDomainBodyGyroJerkMagMean:*,
-*freqDomainBodyGyroJerkMagStd*,
-*freqDomainBodyGyroMagMean*,
-*freqDomainBodyGyroMagStd*,
-*freqDomainBodyGyroMeanX*,
-*freqDomainBodyGyroMeanY*,
-*freqDomainBodyGyroMeanZ*,
-*freqDomainBodyGyroStdX*,
-*freqDomainBodyGyroStdY*,
-*freqDomainBodyGyroStdZ*,
-*timeDomainBodyAccJerkMagMean*,
-*timeDomainBodyAccJerkMagStd*,
-*timeDomainBodyAccJerkMeanX*,
-*timeDomainBodyAccJerkMeanY*,
-*timeDomainBodyAccJerkMeanZ*,
-*timeDomainBodyAccJerkStdX*,
-*timeDomainBodyAccJerkStdY*,
-*timeDomainBodyAccJerkStdZ*,
-*timeDomainBodyAccMagMean*,
-*timeDomainBodyAccMagStd*,
-*timeDomainBodyAccMeanX*,
-*timeDomainBodyAccMeanY*,
-*timeDomainBodyAccMeanZ*,
-*timeDomainBodyAccStdX*,
-*timeDomainBodyAccStdY*,
-*timeDomainBodyAccStdZ*,
-*timeDomainBodyGyroJerkMagMean:*,
-*timeDomainBodyGyroJerkMagStd*,
-*timeDomainBodyGyroJerkMeanX*,
-*timeDomainBodyGyroJerkMeanY*,
-*timeDomainBodyGyroJerkMeanZ*,
-*timeDomainBodyGyroJerkStdX*,
-*timeDomainBodyGyroJerkStdY*,
-*timeDomainBodyGyroJerkStdZ*,
-*timeDomainBodyGyroMagMean*,
-*timeDomainBodyGyroMagStd*,
-*timeDomainBodyGyroMeanX*,
-*timeDomainBodyGyroMeanY*,
-*timeDomainBodyGyroMeanZ*,
-*timeDomainBodyGyroStdX*,
-*timeDomainBodyGyroStdY*,
-*timeDomainBodyGyroStdZ*,
-*timeDomainGravityAccMagMean*,
-*timeDomainGravityAccMagStd*,
-*timeDomainGravityAccMeanX*,
-*timeDomainGravityAccMeanY*,
-*timeDomainGravityAccMeanZ*,
-*timeDomainGravityAccStdX*,
-*timeDomainGravityAccStdY*,
-*timeDomainGravityAccStdZ*
+Result variable Name|Name of variable that was averaged
+------------|-----------------
+freqDomainBodyAccJerkMagMean|fBodyBodyAccJerkMag-mean()
+freqDomainBodyAccJerkMagStd|fBodyBodyAccJerkMag-std()
+freqDomainBodyAccJerkMeanX|fBodyAccJerk-mean()-X
+freqDomainBodyAccJerkMeanY|fBodyAccJerk-mean()-Y
+freqDomainBodyAccJerkMeanZ|fBodyAccJerk-mean()-Z
+freqDomainBodyAccJerkStdX|fBodyAccJerk-std()-X
+freqDomainBodyAccJerkStdY|fBodyAccJerk-std()-Y
+freqDomainBodyAccJerkStdZ|fBodyAccJerk-std()-Z
+freqDomainBodyAccMagMean|fBodyAccMag-mean()
+freqDomainBodyAccMagStd|fBodyAccMag-std()
+freqDomainBodyAccMeanX|fBodyAcc-mean()-X
+freqDomainBodyAccMeanY|fBodyAcc-mean()-Y
+freqDomainBodyAccMeanZ|fBodyAcc-mean()-Z
+freqDomainBodyAccStdX|fBodyAcc-std()-X
+freqDomainBodyAccStdY|fBodyAcc-std()-Y
+freqDomainBodyAccStdZ|fBodyAcc-std()-Z
+freqDomainBodyGyroJerkMagMean|fBodyBodyGyroJerkMag-mean()
+freqDomainBodyGyroJerkMagStd|fBodyBodyGyroJerkMag-std()
+freqDomainBodyGyroMagMean|fBodyBodyGyroMag-mean()
+freqDomainBodyGyroMagStd|fBodyBodyGyroMag-std()
+freqDomainBodyGyroMeanX|fBodyGyro-mean()-X
+freqDomainBodyGyroMeanY|fBodyGyro-mean()-Y
+freqDomainBodyGyroMeanZ|fBodyGyro-mean()-Z
+freqDomainBodyGyroStdX|fBodyGyro-std()-X
+freqDomainBodyGyroStdY|fBodyGyro-std()-Y
+freqDomainBodyGyroStdZ|fBodyGyro-std()-Z
+timeDomainBodyAccJerkMagMean|tBodyAccJerkMag-mean()
+timeDomainBodyAccJerkMagStd|tBodyAccJerkMag-std()
+timeDomainBodyAccJerkMeanX|tBodyAccJerk-mean()-X
+timeDomainBodyAccJerkMeanY|tBodyAccJerk-mean()-Y
+timeDomainBodyAccJerkMeanZ|tBodyAccJerk-mean()-Z
+timeDomainBodyAccJerkStdX|tBodyAccJerk-std()-X
+timeDomainBodyAccJerkStdY|tBodyAccJerk-std()-Y
+timeDomainBodyAccJerkStdZ|tBodyAccJerk-std()-Z
+timeDomainBodyAccMagMean|tBodyAccMag-mean()
+timeDomainBodyAccMagStd|tBodyAccMag-std()
+timeDomainBodyAccMeanX|tBodyAcc-mean()-X
+timeDomainBodyAccMeanY|tBodyAcc-mean()-Y
+timeDomainBodyAccMeanZ|tBodyAcc-mean()-Z
+timeDomainBodyAccStdX|tBodyAcc-std()-X
+timeDomainBodyAccStdY|tBodyAcc-std()-Y
+timeDomainBodyAccStdZ|tBodyAcc-std()-Z
+timeDomainBodyGyroJerkMagMean|tBodyGyroJerkMag-mean()
+timeDomainBodyGyroJerkMagStd|tBodyGyroJerkMag-std()
+timeDomainBodyGyroJerkMeanX|tBodyGyroJerk-mean()-X
+timeDomainBodyGyroJerkMeanY|tBodyGyroJerk-mean()-Y
+timeDomainBodyGyroJerkMeanZ|tBodyGyroJerk-mean()-Z
+timeDomainBodyGyroJerkStdX|tBodyGyroJerk-std()-X
+timeDomainBodyGyroJerkStdY|tBodyGyroJerk-std()-Y
+timeDomainBodyGyroJerkStdZ|tBodyGyroJerk-std()-Z
+timeDomainBodyGyroMagMean|tBodyGyroMag-mean()
+timeDomainBodyGyroMagStd|tBodyGyroMag-std()
+timeDomainBodyGyroMeanX|tBodyGyro-mean()-X
+timeDomainBodyGyroMeanY|tBodyGyro-mean()-Y
+timeDomainBodyGyroMeanZ|tBodyGyro-mean()-Z
+timeDomainBodyGyroStdX|tBodyGyro-std()-X
+timeDomainBodyGyroStdY|tBodyGyro-std()-Y
+timeDomainBodyGyroStdZ|tBodyGyro-std()-Z
+timeDomainGravityAccMagMean|tGravityAccMag-mean()
+timeDomainGravityAccMagStd|tGravityAccMag-std()
+timeDomainGravityAccMeanX|tGravityAcc-mean()-X
+timeDomainGravityAccMeanY|tGravityAcc-mean()-Y
+timeDomainGravityAccMeanZ|tGravityAcc-mean()-Z
+timeDomainGravityAccStdX|tGravityAcc-std()-X
+timeDomainGravityAccStdY|tGravityAcc-std()-Y
+timeDomainGravityAccStdZ|tGravityAcc-std()-Z
+
 
 #### Units
 As part of the signal processing performed by the experimenters, the data was scaled to fit from -1 to +1. The values in the present results are averages of the scaled values, so their units are also scaled.

@@ -6,7 +6,8 @@ This codebook describes the contents of the data frame produced by running the _
 - what was done to clean up the results.
 
 ### Tidy Data Frame Structure
-The data frame produced by running the script consists of 180 observations of 68 variables.  That is, there are 180 rows of data, with each row corresponding to an observation; and 68 columns of data, with each column representing a variable.  This is in accordance with the first two tidy data principles, namely:
+The data frame produced by running the script consists of 180 observations of 68 variables. That is, there are 180 rows of data, with each row corresponding to an observation; and 68 columns of data, with each column representing a variable.  This is in accordance with the first two tidy data principles, namely:
+
 1. Each variable forms a column.
 2. Each observation forms a row.
 

@@ -58,9 +58,11 @@ The remaining variables use a consistent naming convention that explains each va
 
 So, for instance, the variable name "freqDomainBodyAccJerkMagMean represents an average of a scaled, frequency-domain-analyzed signal corresponding to a mean magnitude of the jerk (time derivative of acceleration) attributable to the subject's motion.
 
+Additional information about the meaning of variables can be found in the UCI HAR Dataset's "features_info.txt" file.
+
 #### Names
 
-The following cross-reference table shows the names of the remaining variables after *activity* and *subject*, in alphabetical order, as well as the name of the experimental data variable that was averaged:
+The following cross-reference table shows the names of the remaining variables after *activity* and *subject*, in alphabetical order, as well as the name of the experimental data variable that was averaged.
 
 Result variable Name|Name of variable that was averaged
 ------------|-----------------
@@ -133,10 +135,10 @@ timeDomainGravityAccStdZ|tGravityAcc-std()-Z
 
 
 #### Units
-As part of the signal processing performed by the original experimenters, their results were scaled to fit from -1 to +1. This scaling affected the units of measure by scaling factors that are not shown in the dataset. So, the values in the present results are just averages of previously-scaled experimental results.
+According to the notes in the UCI HAR Dataset's "README.txt" file, "Features are normalized and bounded within [-1,1]". This normalization affected the units of measure by scaling factors that are not shown in the UCI HAR dataset. So, the values in the present results are just averages of previously-scaled experimental results, and can seem counter-intuitive.  For instance, there are instances of negative values reported for standard deviations, due to the normalization.
 
-## Sample Execution
-The following code block shows a sample run of the script, and the result of running the SCR() function on the output data frame.
+## Example Execution
+The following code block shows an example of running the script's `main()` routine, with an `SCR()` function showing part of the output data frame. We can see that the result data frame has 180 observations of 68 variables, the dat types of the variables seem reasonable, and that the variable names after *activity* and *subject* are ordered alphabetically.
 ```
 > source('D:/repos/Get-Clean-Data/run_analysis.R')
 > adf <- main()

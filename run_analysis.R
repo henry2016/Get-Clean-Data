@@ -37,10 +37,17 @@
 ################################################################################
 library (plyr)
 
-# Main routine, to summarize the data for step 5
+#-------------------------------------------------------------------------------
+# main() -- The main routine that reads the data and produces output.
+#
+# Makes a data frame consisting of filtered and merged tidy data, equivalent to
+# the first four steps of the instructions, and then creates a second data frame
+# fro the first with the average of each variable for each activity and each
+# subject.
+# ------------------------------------------------------------------------------
 main <- function() {
-    df <- makeTidyData() # Get step 4 data frame
-    newDf <- data.frame()
+    df <- makeTidyData() # Get a data frame corresponding to steps 1-4.
+    newDf <- data.frame() # Copy it to begin step 5.
 
     # Get a list of activities
     activityList <- sort(unique(df[, "activity"]))
@@ -50,7 +57,9 @@ main <- function() {
         subjectList <- sort(unique(
             df[df$activity == activity, "subject"]))
         for (subject in subjectList) {
-            # print(paste("subjectId =", subjectId, ", activity =", activity))
+            # Create a new row for each activity-subject pair, containing
+            # averages for each of the variables over all of the observations
+            # of that subject-activity pair
             indices <- (df$subject == subject) & (df$activity == activity)
             sliced <- df[indices, ]
             newRow <- list(activity, subject)
@@ -59,19 +68,45 @@ main <- function() {
                 meanVal = mean(sliced[, i])
                 newRow[length(newRow) + 1] <- meanVal
             }
-            rowDf <- as.data.frame(matrix(newRow, ncol = length(newRow)), stringsAsFactors = FALSE)
+            rowDf <- as.data.frame(matrix(newRow, ncol = length(newRow)),
+                                   stringsAsFactors = FALSE)
             newDf <- rbind(newDf, rowDf)
         }
     }
+    # Apply the column names
     names(newDf) <- names(df)
-    newerDf <- data.frame(lapply(newdf, as.character), stringsAsFactors=FALSE)
+    # Convert column lists to strings.
+    newerDf <- data.frame(lapply(newDf, as.character), stringsAsFactors = FALSE)
+    # Convert the columns that should be numeric back to numbers.
+    newerDf[, 2:ncol(newerDf)] <- sapply(newerDf[, 2:ncol(newerDf)], as.numeric)
+    # Convert the subject column values to integers.
+    newerDf[, "subject"] <- sapply(newerDf[, "subject"], as.integer)
+    # Write the data frame to a file as a text table.
     write.table(newerDf, "output.txt", row.names = FALSE)
+    # return the final averaged data frame.
     return(newerDf)
 }
 
 
-
-makeTidy <- function(nameFrag = "test", baseDir = "UCI Har Datase",
+#-------------------------------------------------------------------------------
+# makeTidy() -- helper function to process a single data set.
+#
+# 1. Reads either the test or training data set,
+# 2. filters it to only the mean or standard deviation variables,
+# 3. sanitizes the column names,
+# 4. adds activity names,
+# 5. adds subject numbers, and
+# 6. returns a more-tidy data frame.
+#
+# Inputs:
+# nameFrag -- Either "test" or "training", selects the dataset to read.
+# baseDir -- Path to the subdirectory containing the UCI Har dataset.
+# colLabels -- A list of column names for the data read from the dataset.
+#
+# Returns:
+# A data frame containing a filtered version of the selected dataset.
+# ------------------------------------------------------------------------------
+makeTidy <- function(nameFrag = "test", baseDir = "UCI Har Dataset",
                      colLabels = NULL) {
     # Read the data file into a data frame
     dataFileName <- sprintf("%s/%s/x_%s.txt", baseDir, nameFrag, nameFrag)
@@ -93,10 +128,13 @@ makeTidy <- function(nameFrag = "test", baseDir = "UCI Har Datase",
         aveOrStdColNames[i] <- gsub("-std()", "Std", aveOrStdColNames[i],
                                     fixed = TRUE)
         aveOrStdColNames[i] <- sub("-", "", aveOrStdColNames[i],
-                                    fixed = TRUE)
+                                   fixed = TRUE)
+        aveOrStdColNames[i] <- sub("BodyBody", "Body", aveOrStdColNames[i],
+                                   fixed = TRUE)
     }
 
-    # select only those columns from the data frame.
+    # Select only those columns from the data frame that are averages or
+    # standard deviations.
     df <- df[, aveOrStdL]
 
     # Get the activity labels
@@ -129,8 +167,11 @@ makeTidy <- function(nameFrag = "test", baseDir = "UCI Har Datase",
     return( combinedFrame )
 }
 
-# Helper function to create a merged tidy data frame, corresponding to
-# steps 1-4 of the assignment's instructions.
+#-------------------------------------------------------------------------------
+# makeTidyData() -- Helper function that creates a merged tidy data frame.
+#
+# Corresponds to steps 1-4 of the assignment's instructions.
+#-------------------------------------------------------------------------------
 makeTidyData <- function() {
     baseDir <- "UCI Har Dataset"
     colNameFileName <- sprintf("%s/features.txt", baseDir)

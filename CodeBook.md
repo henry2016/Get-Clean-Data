@@ -136,7 +136,7 @@ timeDomainGravityAccStdZ|tGravityAcc-std()-Z
 As part of the signal processing performed by the original experimenters, their results were scaled to fit from -1 to +1. This scaling affected the units of measure by scaling factors that are not shown in the dataset. So, the values in the present results are just averages of previously-scaled experimental results.
 
 ## Sample Execution
-The following code block shows a sample run of the script, and the result of running the SCR() function on the output data file.
+The following code block shows a sample run of the script, and the result of running the SCR() function on the output data frame.
 ```
 > source('D:/repos/Get-Clean-Data/run_analysis.R')
 > adf <- main()

@@ -53,7 +53,9 @@ The remaining variables use a consistent naming syntax, as follows:
 	- "Mean" indicates an arithmetic mean.
 	- "Std" indicates a standard deviation.
 - An optional axis identifier for a component of a 3-D vector; either "X", "Y", or "Z".
+
 #### Names
+
 The names of the remaining variables after *activity* and *subject*, in alphabvetical order, are as follows:
 
 *freqDomainBodyAccJerkMagMean*,

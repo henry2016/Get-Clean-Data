@@ -56,3 +56,6 @@ The _makeTidy()_ subroutine creates a path to an experimental dataset from its p
 This filtering excludes labels such as "fBodyAccJerk-meanFreq()-X" and "angle(tBodyGyroMean,gravityMean)", since although these labels include the substring "mean", the underlying variable isn't an arithmetic mean.
 
 The resulting column labels are further sanitized by removing the parentheses and hyphens that otherwise might confuse R, and columns of data for the activity type and subject id are inserted into the data frame.  The columns are then ordered so the names of the averaged columns appear in alphabetical order.
+
+##### Additional details about the script algorithms
+For additional details about the script's algorithms, please see the comments contained within the R script file.

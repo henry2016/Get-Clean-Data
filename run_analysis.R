@@ -131,11 +131,19 @@ makeTidy <- function(nameFrag = "test", baseDir = "UCI Har Dataset",
                                    fixed = TRUE)
         aveOrStdColNames[i] <- sub("BodyBody", "Body", aveOrStdColNames[i],
                                    fixed = TRUE)
+        aveOrStdColNames[i] <- gsub("^t", "timeDomain", aveOrStdColNames[i])
+        aveOrStdColNames[i] <- gsub("^f", "freqDomain", aveOrStdColNames[i])
     }
 
     # Select only those columns from the data frame that are averages or
     # standard deviations.
     df <- df[, aveOrStdL]
+
+    # Sort the columns based on the sanitized activity names
+    names(df) <- aveOrStdColNames
+    sortedColOrder <- order(aveOrStdColNames)
+    df <- df[, sortedColOrder]
+    aveOrStdColNames <- aveOrStdColNames[sortedColOrder]
 
     # Get the activity labels
     activityLabelsFileName <- sprintf("%s/activity_labels.txt", baseDir)

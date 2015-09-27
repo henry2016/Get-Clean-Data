@@ -37,8 +37,8 @@ The remaining 66 variables are all averages computed as the means of the values 
 - keeping a consistent camel-case naming style, and
 - maintaining a consistent naming syntax by changing the substring "BodyBody" to "Body".
 
-#### Naming Syntax
-The remaining variables use a consistent naming syntax, as follows:
+#### Variable Naming Convention
+The remaining variables use a consistent naming convention that explains each variable's meaning, as follows:
 - The first part of a variable name indicates if the underlying values were obtained by time or frequency domain analysis of the sensor signals.
 	- "timeDomain" indicates time-domain analysis.
 	- "freqDomain" indicates frequency-domain analysis.
@@ -55,6 +55,8 @@ The remaining variables use a consistent naming syntax, as follows:
 	- "Mean" indicates an arithmetic mean.
 	- "Std" indicates a standard deviation.
 - An optional axis identifier for a component of a 3-D vector; either "X", "Y", or "Z".
+
+So, for instance, the variable name "freqDomainBodyAccJerkMagMean represents an average of a scaled, frequency-domain-analyzed signal corresponding to a mean magnitude of the jerk (time derivative of acceleration) attributable to the subject's motion.
 
 #### Names
 
@@ -131,7 +133,7 @@ timeDomainGravityAccStdZ|tGravityAcc-std()-Z
 
 
 #### Units
-As part of the signal processing performed by the experimenters, the data was scaled to fit from -1 to +1. The values in the present results are averages of the scaled values, so their units are also scaled.
+As part of the signal processing performed by the original experimenters, their results were scaled to fit from -1 to +1. This scaling affected the units of measure by scaling factors that are not shown in the dataset. So, the values in the present results are just averages of previously-scaled experimental results.
 
 ## Sample Execution
 The following code block shows a sample run of the script, and the result of running the SCR() function on the output data file.

@@ -8,9 +8,11 @@ This codebook describes the contents of the data frame produced by running the _
 The data frame produced by running the script consists of 180 observations of 68 variables.  That is, there are 180 rows of data, with each row corresponding to an observation; and 68 columns of data, with each column representing a variable.  This is in accordance with the first two tidy data principles, namely:
 1. Each variable forms a column.
 2. Each observation forms a row.
+
 ## Variables
 ### The first two variables
 The first two variables, named *activity* and *subject*, are somewhat different than the remaining variables, and are used to sort the rows of the output data frame, primarily by *activity*, and secondarily by *subject*.  These two variables are described first.
+
 #### Activity
 The first variable, named *activity*, is a string representing the type of activity being performed during an observation.  The six possible values of the *activity* string are:
 - LAYING
@@ -21,6 +23,7 @@ The first variable, named *activity*, is a string representing the type of activ
 - WALKING_UPSTAIRS
 
 These activity names were obtained from the activity_labels.txt file in the UCI HAR dataset.  They were spliced in the results dta frame by mapping an integer activity factor to the corresponding activity string.
+
 #### Subject
 The second variable, named *subject*, is an integer ranging from 1 to 30, representing which of the subjects performed the activity being observed.
 

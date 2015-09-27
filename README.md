@@ -9,7 +9,7 @@ Bloomberg School of Public Health.
 This repo contains:
 * _run_analysis.R_ -- an R Scipt that cleans and tidies data from a specific experiment's data set.
 * _output.txt_ -- a text table corresponding to dataframe obtained from running _run_analysis.R_.
-* _CodeBook.md_ -- describing the variables, the data, and what was done to clean and tidy the data.
+* _CodeBook.md_ -- a codebook describing the resulting variables and data, and what was done to clean and tidy the data.
 
 #### Data Source Files
 To run the _run_analysis.R_ script, first the experimental data must be downloaded and unzipped into the working directory.  When properly extracted, several datasets will be in a subfolder named "UCI HAR Dataset".
@@ -37,7 +37,7 @@ The additional processing steps include filtering the data to select certain var
 
 The _makeTidy()_ subroutine is called twice; once for the test dataset, and once for the training data set. The subroutine that calls _makeTidy()_ twice is named _makeTidyData()_, and after _makeTidyData()_ gets the two filtered datasets, it merges them into a single result. Details of the filtering performed by the _makeTidy()_ subroutine are described later.
 
-After calling _makeTidyData()_ to get the filtered, merged result, the _main()_ routine creates a new dataframe that shows the average of the (filtered) variables for each combination of activity type and subject.  This new data frame is written as a table to the _output.txt_ file, and returned as a data frame by the _main()_ routine.
+After calling _makeTidyData()_ to get the filtered, merged result, the _main()_ routine creates a new dataframe that shows the average of the (filtered) variables for each combination of activity type and subject number.  The rows of this new data frame are created in order, primarily by activity name and secondarily by subject number. The data frame is then written as a table to the _output.txt_ file, and returned as a data frame by the _main()_ routine.
 
 The _main()_ routine takes 19.37 seconds to execute on a 2.67 GHz Core i7.
 
@@ -55,4 +55,4 @@ The _makeTidy()_ subroutine creates a path to an experimental dataset from its p
 
 This filtering excludes labels such as "fBodyAccJerk-meanFreq()-X" and "angle(tBodyGyroMean,gravityMean)", since although these labels include the substring "mean", the underlying variable isn't an arithmetic mean.
 
-The resulting column labels are further sanitized by removing the parentheses and hyphens that otherwise might confuse R, and columns of data for the activity type and subject id are inserted into the data frame.
+The resulting column labels are further sanitized by removing the parentheses and hyphens that otherwise might confuse R, and columns of data for the activity type and subject id are inserted into the data frame.  The columns are then ordered so the names of the averaged columns appear in alphabetical order.
